@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 
-def compress(raw_image, n: int):
+def compress(raw_image: np.array, n: int) -> np.ndarray:
     R, G, B = cv2.split(raw_image)
 
     U_B, S_B, Vt_B = np.linalg.svd(B, full_matrices=False)
