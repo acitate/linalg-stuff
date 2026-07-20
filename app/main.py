@@ -1,5 +1,6 @@
 import streamlit as st
-from src import svd_compression as svc, linear_system as ls, file_handler as fp
+from modules import svd_compression as svc, linear_system as ls
+from utils import file_handler as fp
 
 
 st.set_page_config(page_title="linalg", layout="wide")
