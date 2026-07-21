@@ -1,7 +1,8 @@
 import streamlit as st
 from modules import svd_compression as svc, linear_system as ls
+from modules.pagerank import page_rank as pg, sample_input as si
 from utils import file_handler as fp
-
+from utils.graph_visualizer import plot_digraph
 
 st.set_page_config(page_title="linalg", layout="wide")
 
@@ -18,6 +19,9 @@ with st.sidebar:
 
     if st.button("Least Squares vs. Linear Regression", use_container_width=True):
         st.session_state.page = "pg2"
+
+    if st.button(label="PageRank", use_container_width=True):
+        st.session_state.page = "pg3"
 
 page = st.session_state.page
 
@@ -85,3 +89,18 @@ elif page == "pg2":
         st.latex(Output)
     else:
         st.info("Upload a CSV file to view its contents.")
+elif page == "pg3":
+    st.title("PageRank Implementation")
+
+    st.subheader("Sample Graph")
+
+    st.pyplot(plot_digraph(si.GRAPH), use_container_width=False)
+
+    st.divider()
+
+    Output = str()
+
+    for item in pg.page_rank(si.GRAPH, si.DAMPING_FACTOR, si.TOLERANCE).items():
+        Output += f"Node {item[0]} rank: {item[1]}\n"
+
+    st.text(Output)
