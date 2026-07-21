@@ -23,53 +23,35 @@ page = st.session_state.page
 
 
 if page == "pg1":
-
     st.title("SVD Image Compression")
 
     # File upload
     uploaded_file = st.file_uploader(
         "Upload a file",
         key="page1_upload",
-        type=["png", "jpg", "jpeg", "bmp", "tif", "tiff"]
+        type=["png", "jpg", "jpeg", "bmp", "tif", "tiff"],
     )
 
     # Dropdown
     option = st.selectbox(
-    "Mode",
-    ["Components", "Percentage"],
-    accept_new_options=False
+        "Mode", ["Components", "Percentage"], accept_new_options=False
     )
 
     # Slider
-    slider_value = st.slider(
-        "Slider",
-        min_value=1,
-        max_value=100,
-        value=50
-    )
+    slider_value = st.slider("Slider", min_value=1, max_value=100, value=50)
 
     if uploaded_file is not None:
-
         st.divider()
         st.subheader("Compressed Image")
 
         image = svc.compress(fp.image_to_array(uploaded_file), slider_value)
 
-        st.image(
-            image,
-            caption="Compressed Image",
-            use_container_width=False
-        )
+        st.image(image, caption="Compressed Image", use_container_width=False)
 elif page == "pg2":
-
     st.title("Least Squares vs. Linear Regression")
 
     # CSV Upload
-    uploaded_csv = st.file_uploader(
-        "Upload CSV",
-        type=["csv"],
-        key="page2_upload"
-    )
+    uploaded_csv = st.file_uploader("Upload CSV", type=["csv"], key="page2_upload")
 
     if uploaded_csv is not None:
         data = fp.csv_to_array(uploaded_csv)
@@ -84,7 +66,7 @@ elif page == "pg2":
 
         st.subheader("NumPy Least Squares")
 
-        Output = fr"""
+        Output = rf"""
         x = {fp.array_to_bmatrix(x)}\qquad\qquad
         Ax = {fp.array_to_bmatrix(data[:, :-1] @ x)}\qquad\qquad
         b = {fp.array_to_bmatrix(data[:, -1])}
@@ -94,7 +76,7 @@ elif page == "pg2":
 
         st.subheader("Scikit-Learn Linear Regression")
 
-        Output = fr"""
+        Output = rf"""
         x = {fp.array_to_bmatrix(reg.coef_)}\qquad\qquad
         Ax = {fp.array_to_bmatrix(data[:, :-1] @ reg.coef_)}\qquad\qquad
         b = {fp.array_to_bmatrix(data[:, -1])}
@@ -103,4 +85,3 @@ elif page == "pg2":
         st.latex(Output)
     else:
         st.info("Upload a CSV file to view its contents.")
-

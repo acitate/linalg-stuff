@@ -7,7 +7,7 @@ def least_squares(data: np.array):
     b = data[:, -1]
 
     output = np.linalg.lstsq(A, b)
-    
+
     return output
 
 
@@ -15,7 +15,9 @@ def regression(data: np.array):
     A = data[:, :-1]
     b = data[:, -1]
 
-    model = LinearRegression(fit_intercept=False, tol=1e-15) # stupid version difference. cost me a whole day
+    model = LinearRegression(
+        fit_intercept=False, tol=1e-15
+    )  # stupid version difference. cost me a whole day
 
     model.fit(A, b)
 

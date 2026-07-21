@@ -13,7 +13,13 @@ def compress(raw_image: np.array, n: int) -> np.ndarray:
     G_compressed = np.matrix(U_G[:, :n]) * np.diag(S_G[:n]) * np.matrix(Vt_G[:n, :])
     B_compressed = np.matrix(U_B[:, :n]) * np.diag(S_B[:n]) * np.matrix(Vt_B[:n, :])
 
-    compressed_image = cv2.merge([np.clip(R_compressed, 1, 255), np.clip(G_compressed, 1, 255), np.clip(B_compressed, 1, 255)])
+    compressed_image = cv2.merge(
+        [
+            np.clip(R_compressed, 1, 255),
+            np.clip(G_compressed, 1, 255),
+            np.clip(B_compressed, 1, 255),
+        ]
+    )
     compressed_image = compressed_image.astype(np.uint8)
-    
+
     return compressed_image
