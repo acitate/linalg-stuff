@@ -3,6 +3,7 @@ from modules import linear_system as ls
 from modules import svd_compression as svc
 from modules.pagerank import page_rank as pg
 from modules.pagerank import sample_input as si
+from modules.semanticsimilarity.semantic_similarity import pipeline
 from utils import file_handler as fp
 from utils.graph_visualizer import plot_digraph
 
@@ -24,6 +25,9 @@ with st.sidebar:
 
     if st.button(label="PageRank", use_container_width=True):
         st.session_state.page = "pg3"
+
+    if st.button(label="Semantic Similarity", use_container_width=True):
+        st.session_state.page = "pg4"
 
 page = st.session_state.page
 
@@ -111,5 +115,86 @@ elif page == "pg3":
 
     st.subheader("Code:")
 
-    with open(r"app/modules/pagerank/page_rank.py", 'r') as file:
+    with open(r"app/modules/pagerank/page_rank.py", "r") as file:
         st.code(file.read(), language="python")
+else:
+    st.title("Semantic Similarity/SVD Reduction")
+
+    st.set_page_config(layout="wide")
+
+    # -------------------------
+    # Sentence input
+    # -------------------------
+    sentences = st.text_area(
+        "Sentences (One per line)",
+        placeholder="Type here...",
+        height=350,
+    )
+
+    st.write("")  # Spacer
+
+    # -------------------------
+    # Bottom row
+    # -------------------------
+    col1, col2, col3, col4 = st.columns([2.2, 1.6, 1.8, 1])
+
+    with col1:
+        method = st.selectbox(
+            "Method",
+            [
+                "tfidf",
+                "word2vec",
+                "fasttext",
+            ],
+            index=0,
+        )
+
+    with col2:
+        components = st.number_input(
+            "Components",
+            min_value=1,
+            value=None,
+            step=1,
+        )
+
+    with col3:
+        round_decimals = st.number_input(
+            "Round decimals",
+            min_value=1,
+            value=3,
+            step=1,
+        )
+
+    with col4:
+        st.write("")  # Vertical spacing
+        st.write("")
+        return_reduced = st.checkbox("Return Reduced")
+
+    st.divider()
+    if sentences != "":
+        sentences = sentences.split("\n")
+
+        pipe_out = pipeline(
+            sentences=sentences,
+            method=method,
+            components=components,
+            round_decimals=round_decimals,
+            return_reduced=return_reduced,
+        )
+
+        if return_reduced:
+            sim = pipe_out[0]
+            reduced = pipe_out[1]
+
+            Output = rf"""
+            Similarity Matrix = {fp.array_to_bmatrix(sim)}\newline \newline
+            SVD Reduced Matrix = {fp.array_to_bmatrix(reduced)}        
+            """
+        else:
+            Output = f"""
+            Similarity Matrix = {fp.array_to_bmatrix(pipe_out)}
+            """
+    else:
+        Output = """"""
+
+    st.latex(Output)

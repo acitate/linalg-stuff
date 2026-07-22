@@ -4,11 +4,11 @@ from gensim.models.fasttext import FastText
 from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from sample_input import STOPWORDS
+# from sample_input import STOPWORDS
 
 
 def vectorize_tfidf(sentences: list) -> np.ndarray:
-    vectorizer = TfidfVectorizer(stop_words=STOPWORDS, ngram_range=(1, 2))
+    vectorizer = TfidfVectorizer(stop_words="english", ngram_range=(1, 2))
     sentences_matrix = vectorizer.fit_transform(sentences)
 
     return sentences_matrix.toarray()
