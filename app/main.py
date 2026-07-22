@@ -1,6 +1,8 @@
 import streamlit as st
-from modules import svd_compression as svc, linear_system as ls
-from modules.pagerank import page_rank as pg, sample_input as si
+from modules import linear_system as ls
+from modules import svd_compression as svc
+from modules.pagerank import page_rank as pg
+from modules.pagerank import sample_input as si
 from utils import file_handler as fp
 from utils.graph_visualizer import plot_digraph
 
@@ -104,3 +106,10 @@ elif page == "pg3":
         Output += f"Node {item[0]} rank: {item[1]}\n"
 
     st.text(Output)
+
+    st.divider()
+
+    st.subheader("Code:")
+
+    with open(r"app/modules/pagerank/page_rank.py", 'r') as file:
+        st.code(file.read(), language="python")
