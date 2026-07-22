@@ -3,11 +3,12 @@ name = "linearalgebra"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = "==3.11.15"
 dependencies = [
+    "gensim>=4.4.0",
     "matplotlib>=3.11.1",
     "networkx>=3.6.1",
-    "numpy>=2.5.1",
+    "numpy>=2.4.6",
     "opencv-python>=5.0.0.93",
     "scikit-learn>=1.9.0",
     "streamlit>=1.59.2",
