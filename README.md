@@ -11,4 +11,3 @@ Done as the final project of a Linear Algebra course.
 ```bash
 uv run streamlit run app/main.py
 ```
-(There' probably a better way to do it but idk)
