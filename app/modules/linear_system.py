@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 
 
-def least_squares(data: np.ndarray):
+def least_squares(data: np.ndarray) -> np.ndarray:
     A = data[:, :-1]
     b = data[:, -1]
 
@@ -11,7 +11,7 @@ def least_squares(data: np.ndarray):
     return output
 
 
-def regression(data: np.ndarray):
+def regression(data: np.ndarray) -> LinearRegression:
     A = data[:, :-1]
     b = data[:, -1]
 
@@ -22,3 +22,11 @@ def regression(data: np.ndarray):
     model.fit(A, b)
 
     return model
+
+
+def normal(data: np.ndarray) -> np.ndarray:
+    A = data[:, :-1]
+    b = data[:, -1]
+
+    x = np.linalg.solve(A.T @ A, A.T @ b)
+    return x

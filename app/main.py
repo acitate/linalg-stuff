@@ -71,6 +71,7 @@ elif page == "pg2":
         data = fp.csv_to_array(uploaded_csv)
         x, residual, rank, s = ls.least_squares(data)
         reg = ls.regression(data)
+        normal = ls.normal(data)
 
         st.latex(r"CSV\ Contents = " + fp.array_to_bmatrix(data))
 
@@ -94,6 +95,15 @@ elif page == "pg2":
         x = {fp.array_to_bmatrix(reg.coef_)}\qquad\qquad
         Ax = {fp.array_to_bmatrix(data[:, :-1] @ reg.coef_)}\qquad\qquad
         b = {fp.array_to_bmatrix(data[:, -1])}
+        """
+
+        st.latex(Output)
+
+        st.subheader("Normal (A.T @ A @ x = A.T @ b)")
+
+        Output = rf"""
+        x = {fp.array_to_bmatrix(normal)}\qquad\qquad
+        Ax = {fp.array_to_bmatrix(data[:, :-1] @ normal)}
         """
 
         st.latex(Output)
