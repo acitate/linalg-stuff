@@ -6,6 +6,7 @@ from modules.pagerank import sample_input as si
 from modules.semanticsimilarity.semantic_similarity import pipeline
 from utils import file_handler as fp
 from utils.graph_visualizer import plot_digraph
+from utils.benchmark import performance
 
 st.set_page_config(page_title="linalg", layout="wide")
 
@@ -69,9 +70,10 @@ elif page == "pg2":
 
     if uploaded_csv is not None:
         data = fp.csv_to_array(uploaded_csv)
-        x, residual, rank, s = ls.least_squares(data)
-        reg = ls.regression(data)
-        normal = ls.normal(data)
+        lst_result, lst_time = performance(ls.least_squares, data) #ls.least_squares(data)
+        x, residual, rank, s = lst_result
+        reg, reg_time = performance(ls.regression, data) #ls.regression(data)
+        normal, norm_time = performance(ls.normal, data) #ls.normal(data)
 
         st.latex(r"CSV\ Contents = " + fp.array_to_bmatrix(data))
 
@@ -88,6 +90,7 @@ elif page == "pg2":
         """
 
         st.latex(Output)
+        st.text(f"Time: {lst_time}")
 
         st.subheader("Scikit-Learn Linear Regression")
 
@@ -98,6 +101,7 @@ elif page == "pg2":
         """
 
         st.latex(Output)
+        st.text(f"Time: {reg_time}")
 
         st.subheader("Normal (A.T @ A @ x = A.T @ b)")
 
@@ -107,6 +111,7 @@ elif page == "pg2":
         """
 
         st.latex(Output)
+        st.text(f"Time: {norm_time}")
     else:
         st.info("Upload a CSV file to view its contents.")
 elif page == "pg3":
