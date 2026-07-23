@@ -9,6 +9,6 @@ Done as the final project of a Linear Algebra course.
 
 #### Run:
 ```bash
-uvx --with opencv-python --with scikit-learn --with networkx --with matplotlib --with gensim streamlit run app/main.py
+uv run streamlit run app/main.py
 ```
 (There' probably a better way to do it but idk)
