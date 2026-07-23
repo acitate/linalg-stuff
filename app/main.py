@@ -54,7 +54,11 @@ if page == "pg1":
         st.divider()
         st.subheader("Compressed Image")
 
-        image = svc.compress(fp.image_to_array(uploaded_file), slider_value)
+        image = svc.compress(
+            fp.image_to_array(uploaded_file),
+            slider_value,
+            True if option == "Percentage" else False,
+        )
 
         st.image(image, caption="Compressed Image", use_container_width=False)
 elif page == "pg2":
